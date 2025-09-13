@@ -37,17 +37,29 @@ Together, these two works show how techniques evolve over time: from methodologi
 
 ---
 
-## 4. Findings & Insights
+## 4. Findings & Insights (Exploratory Data Analysis)
 
-- **2016–2017 (ICE Report):**  
-  - Focused on testing a wide range of models and resampling strategies.  
-  - Found that ensemble models (Random Forest, Stacking, XGBoost) performed best in accuracy, but Logistic Regression with SMOTE-RUS remained competitive and interpretable.  
-  - Demonstrated that SHAP values can highlight important predictors such as departure time and carrier.  
+Before building predictive models, both reports carried out detailed exploratory data analysis (EDA) to understand the flight delay problem.
 
-- **2022–2023 (Faculty Report):**  
-  - Applied the methodology to a newer dataset with stricter definitions of delay (>15 minutes).  
-  - Prioritized a model suitable for deployment: Logistic Regression with SMOTE-RUS, offering ~82% accuracy and ROC-AUC above 80%.  
-  - Built and tested a Flask-based system, confirming the model’s usability in real-time prediction scenarios.  
+### ICE Conference Report (2016–2017 Data)
+- **Delay Distribution:** Roughly two-thirds of flights were on-time, while about one-third were delayed, confirming class imbalance in the dataset.  
+- **Temporal Patterns:** Delays were more frequent during evening hours and toward the end of the week. Seasonal peaks appeared in summer and holiday months.  
+- **Airline & Airport Trends:** Certain carriers consistently showed higher delay rates, and major hubs such as ATL and ORD recorded above-average delays due to congestion.  
+- **Correlation Analysis:** Strong correlation observed between `DEP_DELAY` and `ARR_DELAY`, highlighting how departure delays propagate to arrivals. Flight distance showed little influence on delay duration.  
+
+### Faculty Report (2022–2023 Data)
+- **Updated Delay Definition:** Delays were defined as flights arriving more than **15 minutes late**, reflecting operational reporting standards.  
+- **Delay Distribution:** Similar imbalance remained, with the majority of flights on-time but a significant minority delayed.  
+- **Recent Temporal Trends:** Delays were concentrated in peak travel periods (summer and holidays), with noticeable increases in evening flights and Mondays/Fridays.  
+- **Carrier & Airport Effects:** Some airlines demonstrated improved punctuality compared to the 2016–2017 dataset, while large airports still accounted for most delays.  
+- **Propagation of Delays:** As with earlier years, `DEP_DELAY` was the most influential factor in predicting `ARR_DELAY`.  
+
+---
+
+### Key Insights
+- Flight delays are **not random**; they follow clear patterns related to **time of day, day of week, season, carrier, and airport congestion**.  
+- Departure delays strongly predict arrival delays, suggesting operational improvements at the departure stage could significantly reduce overall delay rates.  
+- Despite the six-year gap, the two datasets share consistent patterns, indicating that while the scale of delays changes, the underlying causes remain stable over time.
 
 
 ## 5. Recommendations
