@@ -83,6 +83,9 @@ This included cleaning raw data, handling outliers, encoding categorical variabl
 - **Handling Missing & Invalid Records:** Removed rows with missing `ARR_DELAY`, `DEP_DELAY`, or schedule times. Outlier flights with extreme values (e.g., delays over 1,000 minutes) were excluded.  
   *See Figure 3.5 – “Distribution after outlier removal”* (`docs/images/ICE/fig3_5_outliers_removed.png`).
 
+- **Data Imbalance:** After cleaning, the dataset remained **highly imbalanced**, with roughly **66% on-time flights vs. 34% delayed flights**. This imbalance motivated the extensive use of resampling techniques (SMOTE variants, SMOTE-RUS) in model training.  
+  *See Figure 3.1 – “Distribution of delayed vs. non-delayed flights”* (`docs/images/ICE/fig3_1_delay_distribution.png`).
+
 - **Feature Selection:** Focused on temporal features (day of week, month, quarter), operational features (`CARRIER`, `ORIGIN_AIRPORT_ID`, `DEST_AIRPORT_ID`), and scheduling features (`CRS_DEP_TIME`, `CRS_ARR_TIME`).  
 
 - **Encoding Categorical Variables:** Airports and carriers were label-encoded for use in ML models.  
