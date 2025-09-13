@@ -71,8 +71,51 @@ This section summarizes key findings and points to the original figures included
 - Departure delay is the **single most important predictor**, with correlations consistently above **0.9** in both datasets.  
 - Despite the six-year gap, both datasets share consistent patterns, suggesting that while airline performance and traffic volumes evolve, the **underlying causes of delays remain stable**.
 
+## 5. Data Preparation
+
+After completing exploratory analysis, both reports conducted several preprocessing and feature engineering steps to ensure the datasets were suitable for machine learning models.  
+This included cleaning raw data, handling outliers, encoding categorical variables, and splitting into training and testing sets. Figures referenced here are provided in the original reports and stored in `docs/images/`.
+
 ---
-## 5. Machine Learning Solution
+
+### ICE Conference Report (2016–2017 Data)
+
+- **Handling Missing & Invalid Records:** Removed rows with missing `ARR_DELAY`, `DEP_DELAY`, or schedule times. Outlier flights with extreme values (e.g., delays over 1,000 minutes) were excluded.  
+  *See Figure 3.5 – “Distribution after outlier removal”* (`docs/images/ICE/fig3_5_outliers_removed.png`).
+
+- **Feature Selection:** Focused on temporal features (day of week, month, quarter), operational features (`CARRIER`, `ORIGIN_AIRPORT_ID`, `DEST_AIRPORT_ID`), and scheduling features (`CRS_DEP_TIME`, `CRS_ARR_TIME`).  
+
+- **Encoding Categorical Variables:** Airports and carriers were label-encoded for use in ML models.  
+
+- **Target Definition:**  
+  - *Classification:* `STATUS = 1` if `ARR_DELAY > 0` else `0`  
+  - *Regression:* `ARR_DELAY` in minutes (continuous target)  
+
+- **Train/Test Split:** Stratified sampling ensured balanced class proportions, with **80% training** and **20% testing**.  
+  *See Figure 3.6 – “Stratified train-test split distribution”* (`docs/images/ICE/fig3_6_train_test_split.png`).
+
+---
+
+### Faculty Report (2022–2023 Data)
+
+- **Updated Delay Threshold:** Defined delay as `ARR_DELAY > 15 minutes` (aligned with industry standards). This adjustment reduced the share of delayed flights compared to the ICE dataset.  
+  *See Figure 3.2 – “Distribution of ARR_DELAY before removing outliers”* (`docs/images/Faculty/fig3_2_arr_delay.png`).
+
+- **Outlier Removal:** Excluded unrealistic values, such as negative delays beyond operational tolerance and extreme outliers (> 800 minutes).  
+  *See Figure 3.3 – “Distribution after removing outliers”* (`docs/images/Faculty/fig3_3_outliers_removed.png`).
+
+- **Feature Engineering:**  
+  - Extracted **hour of departure** from `CRS_DEP_TIME`.  
+  - Created dummy variables for **day of week** and **month**.  
+  - Derived binary flags such as *“is weekend flight”*.  
+
+- **Encoding:** Used label encoding for `CARRIER`, `ORIGIN_AIRPORT_ID`, and `DEST_AIRPORT_ID`.  
+
+- **Train/Test Split:** Same approach as the ICE dataset, with **80/20 stratified split**. Evaluation was always performed on the **original, imbalanced test set** to simulate real-world conditions.  
+  *See Figure 3.4 – “Distribution of STATUS in train and test sets”* (`docs/images/Faculty/fig3_4_train_test_split.png`).
+
+---
+## 6. Machine Learning Solution
 
 Both reports applied a variety of machine learning techniques, combined with sampling strategies, to address class imbalance and evaluate predictive performance. The focus of the ICE report was on method comparison and interpretability, while the Faculty report emphasized building a practical deployment-ready system.
 
@@ -100,7 +143,7 @@ Both reports applied a variety of machine learning techniques, combined with sam
 
 ---
 
-### Key Insights
+### Conclusions
 
 - **Consistent Predictors:** Across both time periods, `DEP_DELAY` was the strongest predictor, with SHAP confirming its influence on arrival delay outcomes.  
 - **Classification vs Regression:** Classifying delay occurrence is substantially more reliable than predicting exact delay duration.  
