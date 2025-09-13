@@ -47,16 +47,12 @@ This section summarizes key findings and points to the original figures included
 ### ICE Conference Report (2016–2017 Data)
 
 - **Delay Distribution:** Around **34% of flights were delayed**, confirming significant class imbalance.  
-  *See Figure 3.1 in ICE Report – “Distribution of delayed vs. non-delayed flights”* (`docs/images/ICE/fig3_1_delay_distribution.png`).
 
 - **Temporal Patterns:** Evening departures (after 18:00) showed the highest probability of delay, and weekends (Friday–Sunday) had increased delays compared to weekdays. Seasonal peaks were observed in **July and December**.  
-  *See Figure 3.2 – “Monthly delay trends”* (`docs/images/ICE/fig3_2_monthly_trends.png`).
 
 - **Airline & Airport Trends:** Major hubs such as **ATL** and **ORD** recorded above-average delays (above **40%** of flights delayed), while smaller airports had lower delay rates. Certain carriers consistently performed worse than others.  
-  *See Figure 3.3 – “Carrier delay rate comparison”* (`docs/images/ICE/fig3_3_carrier_delays.png`).
 
-- **Correlation Analysis:** The correlation between `DEP_DELAY` and `ARR_DELAY` exceeded **0.92**, highlighting that departure delays almost directly propagate to arrival delays. In contrast, flight distance had only weak correlation (< 0.1) with delay duration.  
-  *See Figure 3.4 – “Correlation heatmap”* (`docs/images/ICE/fig3_4_corr_heatmap.png`).
+- **Correlation Analysis:** The correlation between `DEP_DELAY` and `ARR_DELAY` exceeded **0.92**, highlighting that departure delays almost directly propagate to arrival delays. In contrast, flight distance had only weak correlation (< 0.1) with delay duration. 
 
 ---
 
@@ -65,16 +61,12 @@ This section summarizes key findings and points to the original figures included
 - **Updated Delay Definition:** Delays were defined as flights arriving more than **15 minutes late**, reflecting operational reporting standards.  
 
 - **Delay Distribution:** The imbalance persisted, with **28–30% of flights delayed** under the new definition.  
-  *See Figure 3.2 in Faculty Report – “Distribution of ARR_DELAY before removing outliers”* (`docs/images/Faculty/fig3_2_arr_delay.png`).
 
 - **Temporal Patterns:** Peak delays occurred during summer months (June–August) and winter holidays. Evening flights still showed the highest delay probability, with Mondays and Fridays standing out among weekdays.  
-  *See Figure 3.1 – “Distribution of CRS_ELAPSED_TIME and DISTANCE”* (`docs/images/Faculty/fig3_1_time_distance_distribution.png`).
 
 - **Carrier & Airport Effects:** Some airlines showed improved punctuality compared to 2016–2017, though large hubs (ATL, ORD, DFW) continued to dominate delay counts.  
-  *See Figure 4.2 – “Classification model evaluations by carrier and airport”* (`docs/images/Faculty/fig4_2_carrier_airport_eval.png`).
 
 - **Propagation of Delays:** As with earlier years, `DEP_DELAY` remained the most influential predictor of `ARR_DELAY`, with correlation above **0.93**.  
-  *See Figure 4.9 – “Evaluation based on 4 methods for test set”* (`docs/images/Faculty/fig4_9_eval_test.png`).
 
 ---
 
