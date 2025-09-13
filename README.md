@@ -127,9 +127,6 @@ Both reports applied a variety of machine learning techniques, combined with sam
 - **Classification Models Tested:** Logistic Regression, Decision Tree, Random Forest, XGBoost, SVM, and Stacking (ensembles).  
   Random Forest and Stacking consistently achieved high precision (>80% for both delayed and non-delayed classes), while Logistic Regression with SMOTE-RUS provided competitive results with faster computation.  
 
-- **Regression Models Tested:** Linear Regression, Ridge/Lasso, Random Forest, and XGBoost were used to predict arrival delay in minutes.  
-  XGBoost achieved **R² ≈ 0.87** on the test set, but the Mean Absolute Percentage Error (MAPE) remained high (50–70%), showing that predicting the exact duration of delays is more difficult than classifying delay occurrence.  
-
 - **Sampling Techniques:** SMOTE, SMOTETomek, SMOTEENN, and SMOTE-RUS were applied. Balancing the dataset improved recall for the minority (delayed) class by more than 10 percentage points compared to training on the raw distribution.  
 
 - **Interpretability:** SHAP analysis identified `DEP_DELAY`, `CRS_DEP_TIME`, and `CARRIER` as the top features influencing predictions. Flights departing during peak congestion hours and from busy hubs had markedly higher SHAP values.  
