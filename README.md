@@ -76,15 +76,15 @@ This section summarizes key findings and points to the original figures included
 After completing exploratory analysis, both reports conducted several preprocessing and feature engineering steps to ensure the datasets were suitable for machine learning models.  
 This included cleaning raw data, handling outliers, encoding categorical variables, and splitting into training and testing sets. Figures referenced here are provided in the original reports and stored in `docs/images/`.
 
----
-
 ### ICE Conference Report (2016–2017 Data)
 
 - **Handling Missing & Invalid Records:** Removed rows with missing `ARR_DELAY`, `DEP_DELAY`, or schedule times. Outlier flights with extreme values (e.g., delays over 1,000 minutes) were excluded.  
-  *See Figure 3.5 – “Distribution after outlier removal”* (`docs/images/ICE/fig3_5_outliers_removed.png`).
 
-- **Data Imbalance:** After cleaning, the dataset remained **highly imbalanced**, with roughly **66% on-time flights vs. 34% delayed flights**. This imbalance motivated the extensive use of resampling techniques (SMOTE variants, SMOTE-RUS) in model training.  
-  *See Figure 3.1 – “Distribution of delayed vs. non-delayed flights”* (`docs/images/ICE/fig3_1_delay_distribution.png`).
+  ![Distribution after outlier removal](Docs/Images/ICE/Distribution%20of%20DEP_DELAY.png)
+
+- **Data Imbalance:** After cleaning, the dataset remained **highly imbalanced**, with roughly **66% on-time flights vs. 34% delayed flights**.  
+
+  ![Distribution of delayed vs. non-delayed flights](Docs/Images/ICE/Number%20of%20observations%20in%20each%20class,%20before%20and%20after%20sampling.png)
 
 - **Feature Selection:** Focused on temporal features (day of week, month, quarter), operational features (`CARRIER`, `ORIGIN_AIRPORT_ID`, `DEST_AIRPORT_ID`), and scheduling features (`CRS_DEP_TIME`, `CRS_ARR_TIME`).  
 
@@ -92,12 +92,10 @@ This included cleaning raw data, handling outliers, encoding categorical variabl
 
 - **Target Definition:**  
   - *Classification:* `STATUS = 1` if `ARR_DELAY > 0` else `0`  
-  - *Regression:* `ARR_DELAY` in minutes (continuous target)  
 
 - **Train/Test Split:** Stratified sampling ensured balanced class proportions, with **80% training** and **20% testing**.  
-  *See Figure 3.6 – “Stratified train-test split distribution”* (`docs/images/ICE/fig3_6_train_test_split.png`).
 
----
+  ![Stratified train-test split distribution](Docs/Images/ICE/Data%20testing%20result.png)
 
 ### Faculty Report (2022–2023 Data)
 
@@ -124,13 +122,24 @@ Both reports applied a variety of machine learning techniques, combined with sam
 
 ### ICE Conference Report (2016–2017 Data)
 
+### ICE Conference Report (2016–2017 Data)
+
 - **Classification Models Tested:** Logistic Regression, Decision Tree, Random Forest, XGBoost, SVM, and Stacking (ensembles).  
   Random Forest and Stacking consistently achieved high precision (>80% for both delayed and non-delayed classes), while Logistic Regression with SMOTE-RUS provided competitive results with faster computation.  
 
+  ![Accuracy index of the models](Docs/Images/ICE/The%20Accuracy%20index%20of%20the%20models%20in%20the%20research.png)
+
+  ![ROC-AUC index of the models](Docs/Images/ICE/The%20ROC-AUC%20index%20of%20the%20models%20in%20the%20research.png)
+
 - **Sampling Techniques:** SMOTE, SMOTETomek, SMOTEENN, and SMOTE-RUS were applied. Balancing the dataset improved recall for the minority (delayed) class by more than 10 percentage points compared to training on the raw distribution.  
+
+  ![Number of observations in each class before and after sampling](Docs/Images/ICE/Number%20of%20observations%20in%20each%20class,%20before%20and%20after%20sampling.png)
 
 - **Interpretability:** SHAP analysis identified `DEP_DELAY`, `CRS_DEP_TIME`, and `CARRIER` as the top features influencing predictions. Flights departing during peak congestion hours and from busy hubs had markedly higher SHAP values.  
 
+  ![SHAP importance on all features](Docs/Images/ICE/SHAP%20importance%20on%20all%20features.png)
+
+  ![SHAP value of all features impact on model output](Docs/Images/ICE/SHAP%20value%20of%20all%20features%20impact%20on%20model%20output.png)
 ### Faculty Report (2022–2023 Data)
 
 - **Classification Models:** The same family of models was tested, with Logistic Regression + SMOTE-RUS selected for deployment due to its balance of accuracy (~82%), ROC-AUC (>80%), and computational efficiency in real-time inference.  
