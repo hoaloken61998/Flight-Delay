@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Flight Delay</title>
+    <!-- Import jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+</head>
+
+<body>
+
+    <form id="form" method="post">
+
+        <table border="1">
+
+            <!-- Dòng nhập liệu cho Dep Delay -->
+            <tr>
+                <td>Dep Delay:</td>
+                <td><input type="number" name="DEP_DELAY" id="DEP_DELAY" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho CRS Elapsed Time -->
+            <tr>
+                <td>CRS Elapsed Time:</td>
+                <td><input type="number" name="CRS_ELAPSED_TIME" id="CRS_ELAPSED_TIME" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Distance -->
+            <tr>
+                <td>Distance:</td>
+                <td><input type="number" name="DISTANCE" id="DISTANCE" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Quarter -->
+            <tr>
+                <td>Quarter:</td>
+                <td><input type="number" name="QUARTER" id="QUARTER" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Month -->
+            <tr>
+                <td>Month:</td>
+                <td><input type="number" name="MONTH" id="MONTH" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Day of month -->
+            <tr>
+                <td>Day of month:</td>
+                <td><input type="number" name="DAY_OF_MONTH" id="DAY_OF_MONTH" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Day of week -->
+            <tr>
+                <td>Day of week:</td>
+                <td><input type="number" name="DAY_OF_WEEK" id="DAY_OF_WEEK" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Op unique carrier -->
+            <tr>
+                <td>Op unique carrier:</td>
+                <td><input type="number" name="OP_UNIQUE_CARRIER" id="OP_UNIQUE_CARRIER" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Tail num -->
+            <tr>
+                <td>Tail num:</td>
+                <td><input type="number" name="TAIL_NUM" id="TAIL_NUM" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Op carrier fl num -->
+            <tr>
+                <td>Op carrier fl num:</td>
+                <td><input type="number" name="OP_CARRIER_FL_NUM" id="OP_CARRIER_FL_NUM" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Origin Airport ID -->
+            <tr>
+                <td>Origin Airport ID:</td>
+                <td><input type="number" name="ORIGIN_AIRPORT_ID" id="ORIGIN_AIRPORT_ID" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Origin City Market ID -->
+            <tr>
+                <td>Origin City Market ID:</td>
+                <td><input type="number" name="ORIGIN_CITY_MARKET_ID" id="ORIGIN_CITY_MARKET_ID" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Dest Airport ID -->
+            <tr>
+                <td>Dest Airport ID:</td>
+                <td><input type="number" name="DEST_AIRPORT_ID" id="DEST_AIRPORT_ID" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho Dest City Market ID -->
+            <tr>
+                <td>Dest City Market ID:</td>
+                <td><input type="number" name="DEST_CITY_MARKET_ID" id="DEST_CITY_MARKET_ID" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho CRS Dep Time -->
+            <tr>
+                <td>CRS Dep Time:</td>
+                <td><input type="number" name="CRS_DEP_TIME" id="CRS_DEP_TIME" size="15" /></td>
+            </tr>
+
+            <!-- Dòng nhập liệu cho CRS Arr Time -->
+            <tr>
+                <td>CRS Arr Time:</td>
+                <td><input type="number" name="CRS_ARR_TIME" id="CRS_ARR_TIME" size="15" /></td>
+            </tr>
+
+            <!-- Dòng button để thực hiện dự đoán -->
+            <tr>
+                <td colspan="2">
+                    <button id="doprediction_button" type="button">Prediction</button>
+                </td>
+            </tr>
+
+            <!-- Dòng hiển thị kết quả dự đoán -->
+            <tr>
+                <td>Delay Flight Prediction:</td>
+                <td><input type="text" name="status" id="status" size="15" readonly /></td>
+            </tr>
+
+        </table>
+
+    </form>
+
+    <!-- Script sử dụng jQuery để thực hiện AJAX request -->
+    <script>
+        $(function () {
+            $('#doprediction_button').click(function () {
+                $.ajax({
+                    // Đường dẫn đến endpoint để thực hiện dự đoán
+                    url: "/predict",
+                    // Dữ liệu được gửi đi từ form
+                    data: $('form').serialize(),
+                    // Phương thức gửi request là POST
+                    type: 'POST',
+                    success: function (response) {
+                        // Xử lý kết quả thành công
+                        console.log(response);
+                        // Hiển thị kết quả dự đoán vào input có id 'status'
+                        $('#status').val(response);
+                    },
+                    error: function (error) {
+                        // Xử lý lỗi nếu có
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
