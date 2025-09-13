@@ -76,42 +76,53 @@ This section summarizes key findings and points to the original figures included
 - Departure delay is the **single most important predictor**, with correlations consistently above **0.9** in both datasets.  
 - Despite the six-year gap, both datasets share consistent patterns, suggesting that while airline performance and traffic volumes evolve, the **underlying causes of delays remain stable**.
 
+## 5. Machine Learning Solution
 
-## 5. Recommendations
-
-- 📦 **Deployment Strategy:**  
-  - Use Logistic Regression (SMOTE-RUS) for real-time predictions.  
-  - Retrain monthly to adapt to seasonal trends and flight pattern shifts.  
-
-- 📉 **Evaluation Protocol:**  
-  - Always train on balanced datasets (SMOTE variants)  
-  - Always test on **original distribution** to reflect reality  
-
-- 🛠 **Future Improvements:**  
-  - Integrate weather & airport traffic data  
-  - Explore deep learning for time-series patterns  
-  - Expand beyond U.S. flights for generalization  
+Both reports applied a variety of machine learning techniques, combined with sampling strategies, to address class imbalance and evaluate predictive performance. The focus of the ICE report was on method comparison and interpretability, while the Faculty report emphasized building a practical deployment-ready system.
 
 ---
 
-## 6. Machine Learning Solution
+### ICE Conference Report (2016–2017 Data)
 
-**Models tested:**
-- Classification → Logistic Regression, Decision Tree, Random Forest, XGBoost, SVM, Stacking  
-- Regression → Linear Regression, Ridge/Lasso, Random Forest, XGBoost  
+- **Classification Models Tested:** Logistic Regression, Decision Tree, Random Forest, XGBoost, SVM, and Stacking (ensembles).  
+  Random Forest and Stacking consistently achieved high precision (>80% for both delayed and non-delayed classes), while Logistic Regression with SMOTE-RUS provided competitive results with faster computation.  
+  *See Figure 4.1 – “Comparison of classification models”* (`docs/images/ICE/fig4_1_classification_comparison.png`).
 
-**Sampling techniques:**
-- SMOTE  
-- SMOTETomek  
-- SMOTEENN  
-- SMOTE-RUS  
+- **Regression Models Tested:** Linear Regression, Ridge/Lasso, Random Forest, and XGBoost were used to predict arrival delay in minutes.  
+  XGBoost achieved **R² ≈ 0.87** on the test set, but the Mean Absolute Percentage Error (MAPE) remained high (50–70%), showing that predicting the exact duration of delays is more difficult than classifying delay occurrence.  
+  *See Figure 4.2 – “Regression performance comparison”* (`docs/images/ICE/fig4_2_regression_comparison.png`).
 
-**Evaluation Metrics:**
-- Classification → Accuracy, Precision, Recall, F1, ROC-AUC  
-- Regression → MAE, RMSE, R², MAPE  
+- **Sampling Techniques:** SMOTE, SMOTETomek, SMOTEENN, and SMOTE-RUS were applied. Balancing the dataset improved recall for the minority (delayed) class by more than 10 percentage points compared to training on the raw distribution.  
+  *See Figure 4.3 – “Impact of sampling on model performance”* (`docs/images/ICE/fig4_3_sampling_effects.png`).
 
-**Interpretability:**
-- SHAP values to identify and rank influential features  
+- **Interpretability:** SHAP analysis identified `DEP_DELAY`, `CRS_DEP_TIME`, and `CARRIER` as the top features influencing predictions. Flights departing during peak congestion hours and from busy hubs had markedly higher SHAP values.  
+  *See Figure 4.4 – “SHAP summary plot for feature importance”* (`docs/images/ICE/fig4_4_shap_summary.png`).
+
+---
+
+### Faculty Report (2022–2023 Data)
+
+- **Classification Models:** The same family of models was tested, with Logistic Regression + SMOTE-RUS selected for deployment due to its balance of accuracy (~82%), ROC-AUC (>80%), and computational efficiency in real-time inference.  
+  *See Figure 4.6 – “Evaluation of classifiers with SMOTE-RUS”* (`docs/images/Faculty/fig4_6_classifier_eval.png`).
+
+- **Regression Models:** Tree-based regressors again showed strong fit, with Random Forest reaching training R² > 0.95 but lower test R² (≈0.81–0.83), highlighting overfitting risks. Linear models generalized more consistently but with lower predictive power.  
+  *See Figure 4.7 – “Comparison of regression models on test set”* (`docs/images/Faculty/fig4_7_regression_eval.png`).
+
+- **Sampling:** The report confirmed that resampling improved detection of delayed flights. SMOTE-RUS was ultimately favored because it balanced the dataset efficiently without excessive computational cost.  
+  *See Figure 4.8 – “Comparison of SMOTE variants”* (`docs/images/Faculty/fig4_8_sampling_variants.png`).
+
+- **Interpretability:** SHAP analysis validated the earlier findings: `DEP_DELAY` dominated predictions, followed by scheduling features (`CRS_DEP_TIME`, `DAY_OF_WEEK`) and airline/airport identifiers. This confirmed that patterns observed in 2016–2017 remain valid in 2022–2023.  
+  *See Figure 4.9 – “SHAP feature importance for deployed model”* (`docs/images/Faculty/fig4_9_shap.png`).
+
+---
+
+### Key Insights
+
+- **Consistent Predictors:** Across both time periods, `DEP_DELAY` was the strongest predictor, with SHAP confirming its influence on arrival delay outcomes.  
+- **Classification vs Regression:** Classifying delay occurrence is substantially more reliable than predicting exact delay duration.  
+- **Model Selection:** While complex ensembles achieve the best offline metrics, Logistic Regression with SMOTE-RUS proved the most suitable for deployment, balancing accuracy, speed, and interpretability.  
+- **Sampling Benefits:** Resampling techniques are essential; they increase recall for delayed flights and reduce bias toward on-time predictions.
+
 
 📊 Example:  
 ![Model Comparison](reports/figures/model_comparison.png)
